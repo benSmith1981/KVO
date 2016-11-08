@@ -22,11 +22,18 @@ class ViewController: UIViewController, WKUIDelegate {
         
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         
+        let notif = NotificationCenter.default
+        notif.addObserver(self, selector: #selector "Notify", name: NSNotification.Name(rawValue: "name1"), object: self)
         self.loadWebPage()
 
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    deinit {
+        print("Remove Webview Deinit")
+        self.webView.removeObserver(self, forKeyPath: "estimatedProgress")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -35,6 +42,10 @@ class ViewController: UIViewController, WKUIDelegate {
     private func loadWebPage() {
         let url = NSURLRequest(url: URL(string: "https://www.google.com")!)
         self.webView.load(url as URLRequest)
+    }
+    
+    func Notify() {
+        print("notified")
     }
     
     override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
