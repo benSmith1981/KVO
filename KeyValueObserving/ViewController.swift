@@ -23,7 +23,6 @@ class ViewController: UIViewController, WKUIDelegate {
         self.webView.addObserver(self, forKeyPath: "estimatedProgress", options: .new, context: nil)
         
         let notif = NotificationCenter.default
-        notif.addObserver(self, selector: #selector "Notify", name: NSNotification.Name(rawValue: "name1"), object: self)
         self.loadWebPage()
 
         // Do any additional setup after loading the view, typically from a nib.
